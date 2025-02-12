@@ -9,6 +9,8 @@ import { Box } from "@mui/material";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
 
+import RegisterForm from "../components/RegisterForm";
+
 const Register = () => {
   return (
     <Container maxWidth="lg">
@@ -43,13 +45,13 @@ const Register = () => {
           >
             Register
           </Typography>
-
-          <Box sx={{ textAlign: "center", mt: 2, color:"secondary.main" }}>
+          <RegisterForm />
+          <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
             <Link to="/">Already have an account? Sign in</Link>
           </Box>
         </Grid>
 
-    <AuthImage image={image} />
+        <AuthImage image={image} />
       </Grid>
     </Container>
   );
