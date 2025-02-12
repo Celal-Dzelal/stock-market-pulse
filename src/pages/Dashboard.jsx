@@ -7,14 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 function Dashboard() {
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            STOCK APP
+            STOCK MARKET PULSE
           </Typography>
           <Button color="inherit">Logout</Button>
         </Toolbar>

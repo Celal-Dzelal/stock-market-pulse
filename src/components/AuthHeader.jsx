@@ -5,7 +5,7 @@ const AuthHeader = () => {
   return (
     <Grid item xs={12} mb={3}>
       <Typography variant="h3" color="primary" align="center">
-        Stock Management App
+        Stock Market Pulse App
       </Typography>
     </Grid>
   );
