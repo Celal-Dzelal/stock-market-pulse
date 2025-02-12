@@ -9,6 +9,7 @@ import image from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   const theme = useTheme();
@@ -40,7 +41,7 @@ const Login = () => {
           <Typography variant="h4" align="center" mb={4} color="secondary.main">
             SIGN IN
           </Typography>
-
+          <LoginForm />
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
             <Link to="/register">Don't have an account? Sign Up</Link>
           </Box>
