@@ -1,9 +1,16 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { register } from "../features/authSlice";
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
+  const handleRegister = (values) => {
+    dispatch(register(values));
+  };
+
   /*//! ------------------------- YUP - VALIDATION SCHEMA ------------------------ */
 
   const SignupSchema = Yup.object().shape({
@@ -45,6 +52,7 @@ const RegisterForm = () => {
       validationSchema={SignupSchema}
       onSubmit={(values) => {
         console.log(values);
+        handleRegister(values);
       }}
     >
       {({
