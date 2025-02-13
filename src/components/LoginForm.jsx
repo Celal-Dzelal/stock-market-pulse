@@ -2,8 +2,21 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { login } from "../features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = (values) => {
+    const result = dispatch(login(values));
+    if (result) {
+      navigate("/stock");
+    }
+  };
+
   const SignupSchema = Yup.object().shape({
     username: Yup.string().required("Required"),
     password: Yup.string().required("Required"),
@@ -13,7 +26,8 @@ const LoginForm = () => {
       initialValues={{ username: "", password: "" }}
       validationSchema={SignupSchema}
       onSubmit={(values) => {
-        console.log(values);
+        // console.log(values);
+        handleLogin(values);
       }}
     >
       {({

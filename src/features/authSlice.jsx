@@ -18,6 +18,23 @@ export const register = createAsyncThunk(
   }
 );
 
+export const login = createAsyncThunk(
+  "auth/login",
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        "https://16111.fullstack.clarusway.com/auth/login",
+        userInfo
+      );
+      console.log("Login Success", data);
+      return data;
+    } catch (error) {
+      console.error("Login Fail", error);
+      return rejectWithValue(error.response?.data || "Login Fail!");
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -39,6 +56,16 @@ const authSlice = createSlice({
         state.token = payload.token;
       })
       .addCase(register.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.currentUser = payload.user;
+        state.token = payload.token;
+        state.error = null;
+      })
+      .addCase(login.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });
