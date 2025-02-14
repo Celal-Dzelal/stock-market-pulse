@@ -1,6 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (token, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        "https://16111.fullstack.clarusway.com/auth/logout",
+        { headers: { Authorization: `Token ${token}` } }
+      );
+      console.log("Logout Success", data);
+      return data;
+    } catch (error) {
+      console.error("Logout Fail", error);
+      return rejectWithValue(error.response?.data || "Logout Fail!");
+    }
+  }
+);
+
 export const register = createAsyncThunk(
   "auth/register",
   async (userInfo, { rejectWithValue }) => {
@@ -68,6 +85,12 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload || "Login Failed!";
+      })
+      .addCase(logout.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.currentUser = null;
+        state.token = null;
+        state.error = null;
       });
   },
 });
