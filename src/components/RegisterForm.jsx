@@ -1,14 +1,25 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Button, TextField, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const handleRegister = (values) => {
-    dispatch(register(values));
+  const navigate = useNavigate();
+  const { error } = useSelector((state) => state.auth);
+
+  const handleRegister = async (values) => {
+    try {
+      const result = await dispatch(register(values)).unwrap();
+      if (result) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Register failed:", error);
+    }
   };
 
   /*//! ------------------------- YUP - VALIDATION SCHEMA ------------------------ */
@@ -127,6 +138,13 @@ const RegisterForm = () => {
             margin="normal"
             type="password"
           />
+          {error && (
+            <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+              {typeof error === "object"
+                ? "User is already registered" || error.error
+                : error}
+            </Typography>
+          )}
           <Button variant="contained" fullWidth type="submit">
             Submit
           </Button>
