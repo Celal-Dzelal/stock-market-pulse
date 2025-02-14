@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Toolbar,
   Typography,
@@ -24,16 +23,29 @@ import { logout } from "../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Outlet } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 
 const drawerWidth = 240;
 
 const links = [
-  { title: "Dashboard", url: "" },
-  { title: "Firms", url: "firms" },
-  { title: "Products", url: "products" },
-  { title: "Purchases", url: "purchases" },
-  { title: "Sales", url: "sales" },
-  { title: "Brands", url: "brands" },
+  {
+    title: "Dashboard",
+    url: "",
+    icon: "public/assets/navbar/ic_analytics.svg",
+  },
+  { title: "Firms", url: "firms", icon: "public/assets/navbar/firms.svg" },
+  {
+    title: "Products",
+    url: "products",
+    icon: "public/assets/navbar/ic_cart.svg",
+  },
+  {
+    title: "Purchases",
+    url: "purchases",
+    icon: "public/assets/navbar/purchase.svg",
+  },
+  { title: "Sales", url: "sales", icon: "public/assets/navbar/sales.svg" },
+  { title: "Brands", url: "brands", icon: "public/assets/navbar/brand.svg" },
 ];
 
 function ResponsiveDrawer() {
@@ -59,10 +71,30 @@ function ResponsiveDrawer() {
       <List>
         {links.map((text, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => navigate(`${text.url}`)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+            <ListItemButton
+              onClick={() => navigate(`${text.url}`)}
+              sx={{
+                color: "secondary.main",
+                borderRadius: "1.2rem",
+                transition: "all 0.5s ease-in-out",
+                border: "2px solid white",
+                "&:hover": {
+                  backgroundColor: "secondary.second",
+                  color: "white",
+                  fontWeight: "bolder",
+                  border: "2px solid black",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  width: 24,
+                  height: 24,
+                  mr: 2,
+                  maskImage: `url(${text.icon})`,
+                  backgroundColor: "currentColor",
+                }}
+              ></Box>
               <ListItemText primary={text.title} />
             </ListItemButton>
           </ListItem>
@@ -89,13 +121,40 @@ function ResponsiveDrawer() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{
+              mr: 2,
+              display: { sm: "none" },
+              "&:hover": {
+                backgroundColor: "primary.main",
+                color: "black",
+                fontWeight: "bolder",
+              },
+            }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Stock Market Pulse App
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignContent: "center",
+              gap: "1rem",
+              p: "5px 15px",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "primary.main",
+                color: "black",
+                fontWeight: "bolder",
+                border: "2px solid white",
+                borderRadius: "10px",
+              },
+            }}
+            onClick={() => navigate("/stock")}
+          >
+            <Typography variant="h6" noWrap component="div">
+              Stock Market Pulse App
+            </Typography>
+            <TroubleshootIcon sx={{ fontSize: "2rem" }} />
+          </Box>
           <Button
             color="inherit"
             onClick={handleLogout}
