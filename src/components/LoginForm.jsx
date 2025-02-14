@@ -1,19 +1,25 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { error } = useSelector((state) => state.auth);
 
-  const handleLogin = (values) => {
-    const result = dispatch(login(values));
-    if (result) {
-      navigate("/stock");
+  const handleLogin = async (values) => {
+    try {
+      const result = await dispatch(login(values)).unwrap();
+      if (result) {
+        navigate("/stock");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   };
 
@@ -65,6 +71,11 @@ const LoginForm = () => {
             margin="normal"
             type="password"
           />
+          {error && (
+            <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+              {typeof error === "object" ? error.message || error.error : error}
+            </Typography>
+          )}
           <Button variant="contained" fullWidth type="submit">
             Sıgn In
           </Button>
