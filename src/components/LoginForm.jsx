@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField, Typography } from "@mui/material";
@@ -30,9 +30,9 @@ const LoginForm = () => {
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={SignupSchema}
-      onSubmit={(values) => {
-        // console.log(values);
+      onSubmit={(values, actions) => {
         handleLogin(values);
+        actions.resetForm();
       }}
     >
       {({
@@ -42,7 +42,6 @@ const LoginForm = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
           <TextField
@@ -56,7 +55,7 @@ const LoginForm = () => {
             helperText={touched.username && errors.username}
             onBlur={handleBlur}
             margin="normal"
-          />{" "}
+          />
           <TextField
             name="password"
             label="Password"

@@ -86,7 +86,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = payload || "Login Failed!";
       })
-      .addCase(logout.fulfilled, (state, { payload }) => {
+      .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.currentUser = null;
         state.token = null;

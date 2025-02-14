@@ -61,9 +61,9 @@ const RegisterForm = () => {
         password: "",
       }}
       validationSchema={SignupSchema}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={(values, actions) => {
         handleRegister(values);
+        actions.resetForm();
       }}
     >
       {({
@@ -73,7 +73,6 @@ const RegisterForm = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
           <TextField
