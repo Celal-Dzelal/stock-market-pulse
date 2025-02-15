@@ -22,26 +22,26 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 
 const drawerWidth = 240;
-
+const icon = (name) => `/assets/navbar/${name}.svg`;
 const links = [
   {
     title: "Dashboard",
     url: "",
-    icon: "/assets/navbar/ic_analytics.svg",
+    icon: icon("ic_analytics"),
   },
-  { title: "Firms", url: "firms", icon: "/assets/navbar/firms.svg" },
+  { title: "Firms", url: "firms", icon: icon("firms") },
   {
     title: "Products",
     url: "products",
-    icon: "/assets/navbar/ic_cart.svg",
+    icon: icon("ic_cart"),
   },
   {
     title: "Purchases",
     url: "purchases",
-    icon: "/assets/navbar/purchase.svg",
+    icon: icon("purchase"),
   },
-  { title: "Sales", url: "sales", icon: "/assets/navbar/sales.svg" },
-  { title: "Brands", url: "brands", icon: "/assets/navbar/brand.svg" },
+  { title: "Sales", url: "sales", icon: icon("sales") },
+  { title: "Brands", url: "brands", icon: icon("brand") },
 ];
 
 const MuiDrawer = () => {
@@ -129,6 +129,7 @@ const MuiDrawer = () => {
           >
             <MenuIcon />
           </IconButton>
+
           <Box
             sx={{
               display: "flex",
