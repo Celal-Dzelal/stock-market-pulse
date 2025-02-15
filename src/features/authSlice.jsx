@@ -5,10 +5,9 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (token, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
-        "https://16111.fullstack.clarusway.com/auth/logout",
-        { headers: { Authorization: `Token ${token}` } }
-      );
+      const { data } = await axios.get(`${BASE_URL}auth/logout`, {
+        headers: { Authorization: `Token ${token}` },
+      });
       console.log("Logout Success", data);
       return data;
     } catch (error) {
@@ -22,10 +21,7 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userInfo, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
-        "https://16111.fullstack.clarusway.com/users/",
-        userInfo
-      );
+      const { data } = await axios.post(`${BASE_URL}users/`, userInfo);
       console.log("Register Success", data);
       return data;
     } catch (error) {
@@ -39,10 +35,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userInfo, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
-        "https://16111.fullstack.clarusway.com/auth/login",
-        userInfo
-      );
+      const { data } = await axios.post(`${BASE_URL}auth/login`, userInfo);
       console.log("Login Success", data);
       return data;
     } catch (error) {
@@ -51,6 +44,8 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const authSlice = createSlice({
   name: "auth",
