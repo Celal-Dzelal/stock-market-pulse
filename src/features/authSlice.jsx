@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+/*//! --------------------------------- LOGOUT --------------------------------- */
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (token, { rejectWithValue }) => {
@@ -8,7 +10,7 @@ export const logout = createAsyncThunk(
       const { data } = await axios.get(`${BASE_URL}auth/logout`, {
         headers: { Authorization: `Token ${token}` },
       });
-      console.log("Logout Success", data);
+      // console.log("Logout Success", data);
       return data;
     } catch (error) {
       console.error("Logout Fail", error);
@@ -17,12 +19,14 @@ export const logout = createAsyncThunk(
   }
 );
 
+/*//! -------------------------------- REGISTER -------------------------------- */
+
 export const register = createAsyncThunk(
   "auth/register",
   async (userInfo, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${BASE_URL}users/`, userInfo);
-      console.log("Register Success", data);
+      // console.log("Register Success", data);
       return data;
     } catch (error) {
       console.error("Register Fail", error);
@@ -31,12 +35,14 @@ export const register = createAsyncThunk(
   }
 );
 
+/*//! ---------------------------------- LOGIN --------------------------------- */
+
 export const login = createAsyncThunk(
   "auth/login",
   async (userInfo, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${BASE_URL}auth/login`, userInfo);
-      console.log("Login Success", data);
+      // console.log("Login Success", data);
       return data;
     } catch (error) {
       console.error("Login Fail", error);
@@ -45,6 +51,8 @@ export const login = createAsyncThunk(
   }
 );
 
+/*//! -------------------------------- GET FIRMS ------------------------------- */
+
 export const firms = createAsyncThunk(
   "auth/firms",
   async (token, { rejectWithValue }) => {
@@ -52,8 +60,8 @@ export const firms = createAsyncThunk(
       const { data } = await axios.get(`${BASE_URL}firms`, {
         headers: { Authorization: `Token ${token}` },
       });
-      console.log("Loading Success", data);
-      return data;
+      // console.log("Loading Success", data.data);
+      return data.data;
     } catch (error) {
       console.error("Loading Fail", error);
       return rejectWithValue(error.response?.data || "Loading Fail!");
@@ -107,9 +115,9 @@ const authSlice = createSlice({
       .addCase(firms.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.firms = payload.data;
-        state.token = payload.token;
+        state.firms = payload;
       })
+
       .addCase(firms.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload || "Loading Failed!";

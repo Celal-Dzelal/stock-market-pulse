@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
-import stockReducer from "../features/authSlice";
 
 const persistConfig = {
   key: "root",
@@ -10,12 +9,16 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
+
 const store = configureStore({
   reducer: {
     auth: persistedReducer,
-    stock: authReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export let persistor = persistStore(store);

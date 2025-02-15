@@ -1,20 +1,30 @@
+import { Button, Container, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { firms } from "../features/authSlice";
+import FirmCard from "../components/Cards/FirmCard";
 
 const Firms = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token, firms } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (token) {
-      dispatch(firms(token)).then((result) => {
-        console.log("Thunk result:", result);
-      });
+    if (token && !firms) {
+      dispatch(firms(token));
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, firms]);
 
-  return <div>{firms.payload}</div>;
+  console.log(firms);
+
+  return (
+    <Container>
+      <Typography variant="h4" color="secondary.main" align="center">
+        <FirmCard />
+      </Typography>
+      <Button variant="contained" sx={{ mt: 2 }}>
+        NEW FIRM
+      </Button>
+    </Container>
+  );
 };
 
 export default Firms;
