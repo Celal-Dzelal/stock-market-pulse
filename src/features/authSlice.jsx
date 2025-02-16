@@ -42,7 +42,6 @@ export const login = createAsyncThunk(
   async (userInfo, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${BASE_URL}auth/login`, userInfo);
-      // console.log("Login Success", data);
       return data;
     } catch (error) {
       console.error("Login Fail", error);
@@ -60,7 +59,6 @@ export const firms = createAsyncThunk(
       const { data } = await axios.get(`${BASE_URL}firms`, {
         headers: { Authorization: `Token ${token}` },
       });
-      // console.log("Loading Success", data.data);
       return data.data;
     } catch (error) {
       console.error("Loading Fail", error);
