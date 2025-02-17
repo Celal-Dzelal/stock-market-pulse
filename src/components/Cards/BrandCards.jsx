@@ -12,17 +12,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
 import { useSelector } from "react-redux";
-import { listBrands } from "../../features/authSlice";
+import { listStockData } from "../../features/stockSlice";
 
 const BrandCards = () => {
   const dispatch = useDispatch();
   const { token, brands } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (token && !brands) {
-      dispatch(listBrands(token));
+    if (token && brands.length === 0) {
+      dispatch(listStockData({ item: "brands", token }));
     }
-  }, [dispatch, token, brands]);
+  }, [dispatch, token, brands.length]);
 
   console.log(brands);
 

@@ -52,40 +52,6 @@ export const login = createAsyncThunk(
   }
 );
 
-/*//! -------------------------------- GET FIRMS ------------------------------- */
-
-export const listFirms = createAsyncThunk(
-  "auth/firms",
-  async (token, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}firms/`, {
-        headers: { Authorization: `Token ${token}` },
-      });
-      return data.data;
-    } catch (error) {
-      console.error("Loading Fail", error);
-      return rejectWithValue(error.response?.data || "Loading Fail!");
-    }
-  }
-);
-
-/*//! -------------------------------- GET BRANDS ------------------------------- */
-
-export const listBrands = createAsyncThunk(
-  "auth/brands",
-  async (token, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}brands/`, {
-        headers: { Authorization: `Token ${token}` },
-      });
-      return data.data;
-    } catch (error) {
-      console.error("Loading Fail", error);
-      return rejectWithValue(error.response?.data || "Loading Fail!");
-    }
-  }
-);
-
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -93,8 +59,6 @@ const authSlice = createSlice({
     loading: false,
     error: null,
     token: null,
-    firms: [],
-    brands: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -127,24 +91,6 @@ const authSlice = createSlice({
         state.currentUser = null;
         state.token = null;
         state.error = null;
-      })
-      .addCase(listFirms.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.firms = payload;
-      })
-      .addCase(listFirms.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = payload || "Loading Failed!";
-      })
-      .addCase(listBrands.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.brands = payload;
-      })
-      .addCase(listBrands.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = payload || "Loading Failed!";
       });
   },
 });

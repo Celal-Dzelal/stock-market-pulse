@@ -12,17 +12,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
 import { useSelector } from "react-redux";
-import { listFirms } from "../../features/authSlice";
+import { listStockData } from "../../features/stockSlice";
 
 const FirmCard = () => {
   const dispatch = useDispatch();
   const { token, firms } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (token && !firms) {
-      dispatch(listFirms(token)); // firms thunk'ını çağırın
+    if (token && firms.length === 0) {
+      dispatch(listStockData({ item: "firms", token }));
     }
-  }, [dispatch, token, firms]);
+  }, [dispatch, token, firms.length]);
 
   console.log(firms);
 
