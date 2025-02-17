@@ -10,7 +10,7 @@ export const logout = createAsyncThunk(
       const { data } = await axios.get(`${BASE_URL}auth/logout`, {
         headers: { Authorization: `Token ${token}` },
       });
-      // console.log("Logout Success", data);
+
       return data;
     } catch (error) {
       console.error("Logout Fail", error);
@@ -56,7 +56,7 @@ export const firms = createAsyncThunk(
   "auth/firms",
   async (token, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}firms`, {
+      const { data } = await axios.get(`${BASE_URL}firms/`, {
         headers: { Authorization: `Token ${token}` },
       });
       return data.data;
@@ -113,7 +113,7 @@ const authSlice = createSlice({
       .addCase(firms.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.firms = payload;
+        state.firms = payload.data;
       })
 
       .addCase(firms.rejected, (state, { payload }) => {

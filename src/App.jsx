@@ -1,10 +1,12 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AppRouter from "./router/AppRouter";
+import React from "react";
 import { Provider } from "react-redux";
-import store, { persistor } from "./app/store";
-import { ToastContainer } from "react-toastify";
-import ErrorBoundary from "./components/ErrorBoundary";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import store, { persistor } from "./app/store";
+import AppRouter from "./router/AppRouter";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 function App() {
   const theme = createTheme({
