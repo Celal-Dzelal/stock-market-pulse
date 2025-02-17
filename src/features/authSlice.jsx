@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 /*//! --------------------------------- LOGOUT --------------------------------- */
 
 export const logout = createAsyncThunk(
@@ -52,7 +54,7 @@ export const login = createAsyncThunk(
 
 /*//! -------------------------------- GET FIRMS ------------------------------- */
 
-export const firms = createAsyncThunk(
+export const listFirms = createAsyncThunk(
   "auth/firms",
   async (token, { rejectWithValue }) => {
     try {
@@ -67,7 +69,22 @@ export const firms = createAsyncThunk(
   }
 );
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+/*//! -------------------------------- GET BRANDS ------------------------------- */
+
+export const listBrands = createAsyncThunk(
+  "auth/brands",
+  async (token, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}brands/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      return data.data;
+    } catch (error) {
+      console.error("Loading Fail", error);
+      return rejectWithValue(error.response?.data || "Loading Fail!");
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -77,6 +94,7 @@ const authSlice = createSlice({
     error: null,
     token: null,
     firms: [],
+    brands: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -110,13 +128,21 @@ const authSlice = createSlice({
         state.token = null;
         state.error = null;
       })
-      .addCase(firms.fulfilled, (state, { payload }) => {
+      .addCase(listFirms.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.firms = payload.data;
+        state.firms = payload;
       })
-
-      .addCase(firms.rejected, (state, { payload }) => {
+      .addCase(listFirms.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload || "Loading Failed!";
+      })
+      .addCase(listBrands.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.brands = payload;
+      })
+      .addCase(listBrands.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload || "Loading Failed!";
       });

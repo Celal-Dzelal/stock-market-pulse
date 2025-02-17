@@ -1,7 +1,12 @@
 import React from "react";
+import BrandCards from "../components/Cards/BrandCards";
 
 const Brands = () => {
-  return <div>Brands</div>;
+  return (
+    <div>
+      <BrandCards />
+    </div>
+  );
 };
 
 export default Brands;

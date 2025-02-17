@@ -1,17 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { createStore } from 'redux'
 import authReducer from "../features/authSlice";
 import {
   persistStore,
   persistReducer,
-  REHYDRATE,
   FLUSH,
+  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
   key: "root",
@@ -24,17 +23,15 @@ const store = configureStore({
   reducer: {
     auth: persistedReducer,
   },
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-
   devTools: process.env.NODE_ENV !== "production",
 });
 
-export let persistor = persistStore(store); // named export istediğimiz kadar bu şekilde çıkış yapılabilir, import ederken {} içinde alınır
+export let persistor = persistStore(store);
 
-export default store; // export default 1 tane olabilir
+export default store;

@@ -12,25 +12,25 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
 import { useSelector } from "react-redux";
-import { listFirms } from "../../features/authSlice";
+import { listBrands } from "../../features/authSlice";
 
-const FirmCard = () => {
+const BrandCards = () => {
   const dispatch = useDispatch();
-  const { token, firms } = useSelector((state) => state.auth);
+  const { token, brands } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (token && !firms) {
-      dispatch(listFirms(token)); // firms thunk'ını çağırın
+    if (token && !brands) {
+      dispatch(listBrands(token));
     }
-  }, [dispatch, token, firms]);
+  }, [dispatch, token, brands]);
 
-  console.log(firms);
+  console.log(brands);
 
   return (
     <Grid container spacing={2} mt={2}>
-      {firms
-        ? firms.map((firm) => (
-            <Grid item xs={12} md={6} lg={4} xl={3} key={firm._id}>
+      {brands
+        ? brands.map((brand) => (
+            <Grid item xs={12} md={6} lg={4} xl={3} key={brand._id}>
               <Card
                 sx={{
                   height: 390,
@@ -46,18 +46,13 @@ const FirmCard = () => {
                   },
                 }}
               >
-                <CardHeader title={firm.name} subheader={firm.address} />
+                <CardHeader title={brand.name} subheader={brand.address} />
                 <CardMedia
                   sx={{ height: 140, objectFit: "contain" }}
                   component="img"
-                  image={firm.image}
-                  alt={firm.name}
+                  image={brand.image}
+                  alt={brand.name}
                 />
-                <CardContent>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    Phone: {firm.phone}
-                  </Typography>
-                </CardContent>
                 <CardActions sx={{ justifyContent: "center", gap: 2 }}>
                   <EditIcon sx={btnStyle} />
                   <DeleteIcon sx={btnStyle} />
@@ -70,4 +65,4 @@ const FirmCard = () => {
   );
 };
 
-export default FirmCard;
+export default BrandCards;
