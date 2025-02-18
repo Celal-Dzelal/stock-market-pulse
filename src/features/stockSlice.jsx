@@ -26,6 +26,8 @@ const stockSlice = createSlice({
     token: null,
     firms: [],
     brands: [],
+    sales: [],
+    purchases: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -33,13 +35,16 @@ const stockSlice = createSlice({
       .addCase(listStockData.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        console.log("Payload:", payload); // Check the payload data
         if (payload.item === "firms") {
           state.firms = payload.data;
         } else if (payload.item === "brands") {
           state.brands = payload.data;
         } else if (payload.item === "products") {
           state.products = payload.data;
+        } else if (payload.item === "sales") {
+          state.sales = payload.data;
+        } else if (payload.item === "purchases") {
+          state.purchases = payload.data;
         }
       })
       .addCase(listStockData.rejected, (state, { payload }) => {
