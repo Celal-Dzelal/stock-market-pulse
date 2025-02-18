@@ -21,7 +21,7 @@ const ProductsTable = () => {
       {products &&
         products.map((product) =>
           product.categoryId ? (
-            <div key={product.categoryId._id}>
+            <div key={product._id}>
               <p>{product.categoryId.name}</p>
             </div>
           ) : (
