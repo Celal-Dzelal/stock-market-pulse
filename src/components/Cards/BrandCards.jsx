@@ -2,21 +2,19 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
-import { useSelector } from "react-redux";
 import { listStockData } from "../../features/stockSlice";
 
 const BrandCards = () => {
   const dispatch = useDispatch();
-  const { token, brands } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+  const { brands } = useSelector((state) => state.stock);
 
   useEffect(() => {
     if (token && brands.length === 0) {

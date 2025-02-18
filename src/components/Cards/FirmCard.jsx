@@ -6,23 +6,23 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
-import { useSelector } from "react-redux";
 import { listStockData } from "../../features/stockSlice";
 
 const FirmCard = () => {
   const dispatch = useDispatch();
-  const { token, firms } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+  const { firms } = useSelector((state) => state.stock);
 
   useEffect(() => {
     if (token && firms.length === 0) {
       dispatch(listStockData({ item: "firms", token }));
     }
-  }, [dispatch, token, firms.length]);
+  }, [dispatch, token, firms]);
 
   console.log(firms);
 

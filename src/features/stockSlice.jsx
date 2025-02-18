@@ -3,13 +3,13 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const listStockData = createAsyncThunk(
-  "auth/listData",
+  "auth/listStockData",
   async ({ item, token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`${BASE_URL}${item}/`, {
         headers: { Authorization: `Token ${token}` },
       });
-      return { item, data: data.data }; // Item adı ve veri
+      return { item, data: data.data };
     } catch (error) {
       console.error("Loading Fail", error);
       return rejectWithValue(error.response?.data || "Loading Fail!");
@@ -33,10 +33,13 @@ const stockSlice = createSlice({
       .addCase(listStockData.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
+        console.log("Payload:", payload); // Check the payload data
         if (payload.item === "firms") {
           state.firms = payload.data;
         } else if (payload.item === "brands") {
           state.brands = payload.data;
+        } else if (payload.item === "products") {
+          state.products = payload.data;
         }
       })
       .addCase(listStockData.rejected, (state, { payload }) => {
