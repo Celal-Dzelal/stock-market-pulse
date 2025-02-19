@@ -11,8 +11,7 @@ import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
-import { listStockData } from "../../features/stockSlice";
-import Firms from "../../pages/Firms";
+import { listStockData, deleteStockData } from "../../features/stockSlice";
 
 const FirmCard = () => {
   const dispatch = useDispatch();
@@ -20,16 +19,16 @@ const FirmCard = () => {
   const { firms } = useSelector((state) => state.stock);
 
   useEffect(() => {
-    if (token && firms.length === 0) {
+    if (token) {
       dispatch(listStockData({ item: "firms", token }));
     }
-  }, []);
+  }, [token, dispatch]);
 
   console.log(firms);
 
-  // const handleDelete = (id) => {
-  //   dispatch(deleteStockData({ token, id }));
-  // };
+  const handleDelete = (id) => {
+    dispatch(deleteStockData({ token, id }));
+  };
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -67,7 +66,7 @@ const FirmCard = () => {
                   <EditIcon sx={btnStyle} />
                   <DeleteIcon
                     sx={btnStyle}
-                    // onClick={() => handleDelete(firm._id)}
+                    onClick={() => handleDelete(firm._id)}
                   />
                 </CardActions>
               </Card>
