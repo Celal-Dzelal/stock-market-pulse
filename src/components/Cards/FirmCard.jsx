@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { btnStyle } from "../../styles/globalStyles";
 import { listStockData } from "../../features/stockSlice";
+import Firms from "../../pages/Firms";
 
 const FirmCard = () => {
   const dispatch = useDispatch();
@@ -22,9 +23,13 @@ const FirmCard = () => {
     if (token && firms.length === 0) {
       dispatch(listStockData({ item: "firms", token }));
     }
-  }, [dispatch, token, firms]);
+  }, []);
 
   console.log(firms);
+
+  // const handleDelete = (id) => {
+  //   dispatch(deleteStockData({ token, id }));
+  // };
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -60,7 +65,10 @@ const FirmCard = () => {
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center", gap: 2 }}>
                   <EditIcon sx={btnStyle} />
-                  <DeleteIcon sx={btnStyle} />
+                  <DeleteIcon
+                    sx={btnStyle}
+                    // onClick={() => handleDelete(firm._id)}
+                  />
                 </CardActions>
               </Card>
             </Grid>

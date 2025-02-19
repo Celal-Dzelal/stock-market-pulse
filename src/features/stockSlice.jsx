@@ -3,19 +3,35 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const listStockData = createAsyncThunk(
-  "auth/listStockData",
+  "stock/listStockData",
   async ({ item, token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`${BASE_URL}${item}/`, {
         headers: { Authorization: `Token ${token}` },
       });
-      return { item, data: data.data };
+      return { item, token, data: data.data };
     } catch (error) {
       console.error("Loading Fail", error);
       return rejectWithValue(error.response?.data || "Loading Fail!");
     }
   }
 );
+
+// export const deleteStockData = createAsyncThunk(
+//   "stock/deleteStockData",
+//   async ({ token, id }, { rejectWithValue }) => {
+//     try {
+//       const url = `${BASE_URL}firms/${id}`;
+//       const { data } = await axios.delete(url, {
+//         headers: { Authorization: `Token ${token}` },
+//       });
+//       return { data: data.data, id };
+//     } catch (error) {
+//       console.error("Delete Fail", error.response || error.message);
+//       return rejectWithValue(error.response?.data || "Delete Fail!");
+//     }
+//   }
+// );
 
 const stockSlice = createSlice({
   name: "stock",
@@ -51,6 +67,11 @@ const stockSlice = createSlice({
         state.loading = false;
         state.error = payload || "Loading Failed!";
       });
+    // .addCase(deleteStockData.fulfilled, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.firms = state.firms.filter((firm) => firm._id !== payload.id);
+    // });
   },
 });
 

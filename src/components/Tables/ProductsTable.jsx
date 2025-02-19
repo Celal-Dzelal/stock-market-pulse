@@ -9,10 +9,10 @@ const ProductsTable = () => {
   const { products } = useSelector((state) => state.stock);
 
   useEffect(() => {
-    if (token && products.length === 0) {
+    if (token && !products) {
       dispatch(listStockData({ item: "products", token }));
     }
-  }, [dispatch, token, products.length]);
+  }, [dispatch, token, products]);
 
   console.log(products);
 

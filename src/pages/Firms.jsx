@@ -4,6 +4,9 @@ import FirmCard from "../components/Cards/FirmCard";
 const Firms = () => {
   return (
     <Container>
+      <Typography variant="h3" color="secondary.main" align="center">
+        Firms
+      </Typography>
       <Button variant="contained" sx={{ mt: 2 }}>
         NEW FIRM
       </Button>
