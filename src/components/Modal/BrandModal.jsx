@@ -30,7 +30,7 @@ export default function BrandModal() {
   });
 
   const handleChange = (e) => {
-    setInfo({ ...info, [e.target.brandname]: e.target.value });
+    setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
