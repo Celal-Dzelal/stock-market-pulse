@@ -1,28 +1,11 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Grid } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Card, CardHeader, CardMedia, CardActions, Grid } from "@mui/material";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { btnStyle } from "../../styles/globalStyles";
-import { listStockData } from "../../features/stockSlice";
+import useEffectHook from "../../hook/useEffectHook";
 
 const BrandCards = () => {
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
-  const { brands } = useSelector((state) => state.stock);
-
-  useEffect(() => {
-    if (token && brands.length === 0) {
-      dispatch(listStockData({ item: "brands", token }));
-    }
-  }, [dispatch, token, brands.length]);
-
-  console.log(brands);
+  const { brands } = useEffectHook();
 
   return (
     <Grid container spacing={2} mt={2}>

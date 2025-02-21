@@ -1,30 +1,20 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Grid } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Grid,
+} from "@mui/material";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { btnStyle } from "../../styles/globalStyles";
-import { listStockData, deleteStockData } from "../../features/stockSlice";
+import { deleteStockData } from "../../features/stockSlice";
+import useEffectHook from "../../hook/useEffectHook";
 
 const FirmCard = () => {
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
-  const { firms } = useSelector((state) => state.stock);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(listStockData({ item: "firms", token }));
-    }
-  }, [token, dispatch]);
-
-  console.log(firms);
+  const { firms } = useEffectHook();
 
   const handleDelete = (id) => {
     dispatch(deleteStockData({ token, id }));

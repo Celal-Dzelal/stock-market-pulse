@@ -1,4 +1,5 @@
 import React from "react";
+
 import SalesTable from "../components/Tables/SalesTable";
 
 const Sales = () => {

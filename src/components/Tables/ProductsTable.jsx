@@ -1,21 +1,8 @@
 import React from "react";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { listStockData } from "../../features/stockSlice";
+import useEffectHook from "../../hook/useEffectHook";
 
 const ProductsTable = () => {
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
-  const { products } = useSelector((state) => state.stock);
-
-  useEffect(() => {
-    if (token && !products) {
-      dispatch(listStockData({ item: "products", token }));
-    }
-  }, [dispatch, token, products]);
-
-  console.log(products);
-
+  const { products } = useEffectHook();
   return (
     <div>
       {products &&
