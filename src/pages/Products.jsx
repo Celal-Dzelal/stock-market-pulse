@@ -15,7 +15,7 @@ const Products = () => {
         Products
       </Typography>
       <Button variant="contained" sx={{ mt: 2 }} onClick={handleOpen}>
-        New Products
+        New Product
       </Button>
       <ProductsTable />
       <ProductModal />
