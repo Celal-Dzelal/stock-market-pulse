@@ -36,6 +36,7 @@ export default function FirmModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setInfo("");
   };
 
   return (
@@ -56,7 +57,7 @@ export default function FirmModal() {
               required
               fullWidth
               onChange={handleChange}
-              value={info.name}
+              value={info.name || ""}
             />
             <TextField
               label="Phone Number"
@@ -67,7 +68,7 @@ export default function FirmModal() {
               fullWidth
               sx={{ mt: 2 }}
               onChange={handleChange}
-              value={info.phone}
+              value={info.phone || ""}
             />
             <TextField
               label="Address"
@@ -78,7 +79,7 @@ export default function FirmModal() {
               fullWidth
               sx={{ mt: 2 }}
               onChange={handleChange}
-              value={info.address}
+              value={info.address || ""}
             />
             <TextField
               label="Firm Logo"
@@ -89,7 +90,7 @@ export default function FirmModal() {
               fullWidth
               sx={{ mt: 2 }}
               onChange={handleChange}
-              value={info.image}
+              value={info.image || ""}
             />
             <Button variant="contained" sx={{ mt: 2 }} fullWidth type="submit">
               Add New Firm

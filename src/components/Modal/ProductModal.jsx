@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../features/modalSlice";
-import { listStockData } from "../../features/stockSlice";
+import useEffectHook from "../../hook/useEffectHook";
 
 const style = {
   position: "absolute",
@@ -28,11 +28,11 @@ const style = {
 export default function ProductModal() {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.modal.modals["product"] || false);
-  const { token } = useSelector((state) => state.auth);
-  const { products } = useSelector((state) => state.stock);
+  const { products } = useEffectHook();
 
   const handleClose = () => {
     dispatch(closeModal("product"));
+    setInfo("");
   };
 
   const [info, setInfo] = useState(() => ({
@@ -52,12 +52,6 @@ export default function ProductModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
-  useEffect(() => {
-    if (token && !products) {
-      dispatch(listStockData({ item: "products", token }));
-    }
-  }, [dispatch, token, products]);
 
   return (
     <div>
@@ -111,7 +105,7 @@ export default function ProductModal() {
               required
               fullWidth
               onChange={handleChange}
-              value={info.name}
+              value={info.name || ""}
               sx={{ mt: 2 }}
             />
             <Button variant="contained" sx={{ mt: 2 }} fullWidth type="submit">

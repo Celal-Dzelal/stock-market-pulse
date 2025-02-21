@@ -22,6 +22,7 @@ export default function BrandModal() {
 
   const handleClose = () => {
     dispatch(closeModal("brand"));
+    setInfo("");
   };
 
   const [info, setInfo] = useState({
@@ -54,7 +55,7 @@ export default function BrandModal() {
               required
               fullWidth
               onChange={handleChange}
-              value={info.brandname}
+              value={info.name || ""}
             />
             <TextField
               label="Brand Logo"
@@ -64,7 +65,7 @@ export default function BrandModal() {
               required
               fullWidth
               onChange={handleChange}
-              value={info.brandlogo}
+              value={info.image || ""}
               sx={{ mt: 2 }}
             />
             <Button variant="contained" sx={{ mt: 2 }} fullWidth type="submit">

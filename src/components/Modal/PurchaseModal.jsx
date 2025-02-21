@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../features/modalSlice";
-import { listStockData } from "../../features/stockSlice";
+// import { listStockData } from "../../features/stockSlice"
+import useEffectHook from "../../hook/useEffectHook";
 
 const style = {
   position: "absolute",
@@ -28,8 +29,7 @@ const style = {
 export default function PurchaseModal() {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.modal.modals["purchase"] || false);
-  const { token } = useSelector((state) => state.auth);
-  const { purchases, products, firms } = useSelector((state) => state.stock);
+  const { firms, products } = useEffectHook();
 
   const handleClose = () => {
     dispatch(closeModal("purchase"));
@@ -45,6 +45,7 @@ export default function PurchaseModal() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -54,24 +55,6 @@ export default function PurchaseModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
-  useEffect(() => {
-    if (token && !products) {
-      dispatch(listStockData({ item: "purchase", token }));
-    }
-  }, [dispatch, token, products]);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(listStockData({ item: "firms", token }));
-    }
-  }, [token, dispatch]);
-
-  useEffect(() => {
-    if (token && purchases.length === 0) {
-      dispatch(listStockData({ item: "purchases", token }));
-    }
-  }, [dispatch, token, purchases.length]);
 
   return (
     <div>
