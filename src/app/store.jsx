@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import stockReducer from "../features/stockSlice";
+import modalReducer from "../features/modalSlice";
 import {
   persistStore,
   persistReducer,
@@ -16,6 +17,7 @@ import storage from "redux-persist/lib/storage";
 const rootReducer = combineReducers({
   auth: authReducer,
   stock: stockReducer,
+  modal: modalReducer,
 });
 
 const persistConfig = {

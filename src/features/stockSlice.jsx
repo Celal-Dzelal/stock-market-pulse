@@ -33,6 +33,21 @@ export const deleteStockData = createAsyncThunk(
   }
 );
 
+export const createStockData = createAsyncThunk(
+  "stock/createStockData",
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${BASE_URL}firms/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      return { data: data.data };
+    } catch (error) {
+      console.error("Create Fail", error.response || error.message);
+      return rejectWithValue(error.response?.data || "Create Fail!");
+    }
+  }
+);
+
 const stockSlice = createSlice({
   name: "stock",
   initialState: {
