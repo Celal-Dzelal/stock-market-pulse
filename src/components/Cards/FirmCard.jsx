@@ -19,6 +19,7 @@ const FirmCard = () => {
   const handleDelete = (id) => {
     dispatch(deleteStockData({ token, id }));
   };
+  console.log(firms);
 
   return (
     <Grid container spacing={2} mt={2}>

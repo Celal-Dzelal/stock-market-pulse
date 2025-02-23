@@ -3,6 +3,8 @@ import { Box, Button, Modal, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../features/modalSlice";
+import { createStockData, listStockData } from "../../features/stockSlice";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -18,6 +20,7 @@ const style = {
 export default function FirmModal() {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.modal.modals["firm"]) || false;
+  const { token } = useSelector((state) => state.auth);
 
   const handleClose = () => {
     dispatch(closeModal("firm"));
@@ -34,9 +37,12 @@ export default function FirmModal() {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setInfo("");
+    await dispatch(createStockData({ item: "firms", info, token }));
+    dispatch(listStockData({ item: "firms", token }));
+    dispatch(handleClose());
+    setInfo({ name: "", address: "", phone: "", image: "" });
   };
 
   return (

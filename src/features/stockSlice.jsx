@@ -35,9 +35,9 @@ export const deleteStockData = createAsyncThunk(
 
 export const createStockData = createAsyncThunk(
   "stock/createStockData",
-  async ({ token }, { rejectWithValue }) => {
+  async ({ token, info, item }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}firms/`, {
+      const { data } = await axios.post(`${BASE_URL}${item}/`, info, {
         headers: { Authorization: `Token ${token}` },
       });
       return { data: data.data };
@@ -47,6 +47,21 @@ export const createStockData = createAsyncThunk(
     }
   }
 );
+
+// export const updateStockData = createAsyncThunk(
+//   "stock/updateStockData",
+//   async ({ token, id }, { rejectWithValue }) => {
+//     try {
+//       const { data } = await axios.put(`${BASE_URL}${item}/${id}`, {
+//         headers: { Authorization: `Token ${token}` },
+//       });
+//       return { data: data.data };
+//     } catch (error) {
+//       console.error("Create Fail", error.response || error.message);
+//       return rejectWithValue(error.response?.data || "Create Fail!");
+//     }
+//   }
+// );
 
 const stockSlice = createSlice({
   name: "stock",
@@ -83,10 +98,20 @@ const stockSlice = createSlice({
         state.error = payload || "Loading Failed!";
       })
       .addCase(deleteStockData.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.firms = state.firms.filter((firm) => firm._id !== payload.id);
+        if (payload.item === "firms") {
+          state.firms = state.firms.filter((firm) => firm._id !== payload.id);
+        }
+      })
+      .addCase(createStockData.fulfilled, (state, { payload }) => {
+        if (payload.item === "firms") {
+          state.firms = payload.data;
+        }
       });
+    // .addCase(updateStockData.fulfilled, (state, { payload }) => {
+    //   if (payload.item === "firms") {
+    //     state.firms = payload.data;
+    //   }
+    // });
   },
 });
 

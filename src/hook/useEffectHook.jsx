@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listStockData } from "../features/stockSlice";
+import { createStockData, listStockData } from "../features/stockSlice";
 
 const useEffectHook = () => {
   const dispatch = useDispatch();
