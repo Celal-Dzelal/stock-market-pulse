@@ -37,9 +37,9 @@ export default function FirmModal() {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await dispatch(createStockData({ item: "firms", info, token }));
+    dispatch(createStockData({ item: "firms", info, token }));
     dispatch(listStockData({ item: "firms", token }));
     dispatch(handleClose());
     setInfo({ name: "", address: "", phone: "", image: "" });

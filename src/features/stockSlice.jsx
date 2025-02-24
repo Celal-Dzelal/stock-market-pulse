@@ -105,6 +105,8 @@ const stockSlice = createSlice({
       .addCase(createStockData.fulfilled, (state, { payload }) => {
         if (payload.item === "firms") {
           state.firms = payload.data;
+        } else if (payload.item === "brands") {
+          state.brands = payload.data;
         }
       });
     // .addCase(updateStockData.fulfilled, (state, { payload }) => {

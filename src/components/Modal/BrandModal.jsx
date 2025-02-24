@@ -3,6 +3,7 @@ import { Box, Button, Modal, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../features/modalSlice";
 import { useState } from "react";
+import { createStockData, listStockData } from "../../features/stockSlice";
 
 const style = {
   position: "absolute",
@@ -19,6 +20,7 @@ const style = {
 export default function BrandModal() {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.modal.modals["brand"] || false);
+  const { token } = useSelector((state) => state.auth);
 
   const handleClose = () => {
     dispatch(closeModal("brand"));
@@ -36,6 +38,10 @@ export default function BrandModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(createStockData({ item: "brands", info, token }));
+    dispatch(listStockData({ item: "brands", token }));
+    dispatch(handleClose());
+    setInfo({ name: "", image: "" });
   };
   return (
     <div>
